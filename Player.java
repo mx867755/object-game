@@ -1,12 +1,12 @@
 public class Player {
-    int row;
-    int col;
-    String tempBlock;
-    int health;
-    int level;
-    int potions;
-    int result;
-    int jabUpgrade;
+    private int row;
+    private int col;
+    private String tempBlock;
+    private int health;
+    private int level;
+    private int potions;
+    private int result;
+    private int jabUpgrade;
 
     public Player(int row, int col){
         this.row = row;
@@ -24,6 +24,7 @@ public class Player {
     public void setHealth(int health){this.health = health;}
     public void setLevel(int level){this.level = level;}
     public void setPotions(int potions){this.potions = potions;}
+    public void setResult(int result){this.result = result;}
 
     public int getRow(){return row;}
     public int getCol(){return col;}
@@ -36,6 +37,14 @@ public class Player {
     public void spawn(String[][] world){
         world[row][col] = "+";
         this.tempBlock = " ";
+    }
+
+    public void takeHit(int modify){
+        this.health -= 9 - modify;
+    }
+
+    public void levelUp(){
+        this.level++;
     }
 
     public int updatePos(String input, String[][] world) {

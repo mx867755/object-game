@@ -89,7 +89,6 @@ public class Main {
         System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\n");
         int blockBuff = 0;
         int healFight = 1;
-        int jabUpgrade;
         double inputPenalty = 0;
         while(true){
             String input = in.next();
@@ -97,7 +96,7 @@ public class Main {
             if (input.equals("quit")){
                 break;
             }
-            else if (player.result != 2){
+            else if (player.getResult() != 2){
                 healFight = 1;
                 if (input.equals("heal")){
                     player.heal();
@@ -107,14 +106,14 @@ public class Main {
                         System.out.println("You died!");
                         break;
                     }
-                    else if (player.result != 2){
+                    else if (player.getResult() != 2){
                         enemy1.updatePos(worldArray[worldNum]);
                         enemy2.updatePos(worldArray[worldNum]);
                         enemy3.updatePos(worldArray[worldNum]);
                         enemyBoss.updatePos(worldArray[worldNum]);
                         printWorld(worldArray[worldNum]);
                         System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potions:" + player.getPotions() + "\n");
-                        if (player.result == 3){
+                        if (player.getResult() == 3){
                             System.out.println("Next stage! Enemies grow stronger!\n");
                             worldNum++;
                             //spawn player in next world
@@ -143,16 +142,16 @@ public class Main {
                             printWorld(worldArray[worldNum]);
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potions:" + player.getPotions() + "\n");
                         }
-                        else if (player.result == 4){
+                        else if (player.getResult() == 4){
                             System.out.println("You found a potion!\n");
                         }
-                        else if (player.result == 5){
+                        else if (player.getResult() == 5){
                             System.out.println("You found an upgrade! (Fleeting jab, level " + player.getJabUpgrade() + ").\n");
                         }
                     }
                     else{
                         printWorld(worldArray[worldNum]);
-                        if (player.row == enemyBoss.row && player.col == enemyBoss.col){
+                        if (player.getRow() == enemyBoss.getRow() && player.getCol() == enemyBoss.getCol()){
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nBoss health:" + enemyBoss.getHealth() + "\nFIGHT!\nType 'j' (jab), 'h' (heavy), 'b' (block), or 'heal' (only at start of fight).\n");
                         }
                         else {
@@ -166,9 +165,9 @@ public class Main {
                     player.heal();
                 }
                 else if (input.equals("h")){
-                    if (player.row == enemy1.row && player.col == enemy1.col){
+                    if (player.getRow() == enemy1.getRow() && player.getCol() == enemy1.getCol()){
                         if ((int) (Math.random() * 10) < 5){
-                            enemy1.health -= 16 + 8 * blockBuff;
+                            enemy1.heavyHit(blockBuff);
                             System.out.println("Hit!\n");
                             blockBuff = 0;
                         }
@@ -176,16 +175,16 @@ public class Main {
                             System.out.println("Miss!\n");
                             blockBuff = 0;
                         }
-                        if (enemy1.health <= 0){
+                        if (enemy1.getHealth() <= 0){
                             enemy1.setHealth(0);
-                            player.level++;
-                            player.result = 0;
+                            player.levelUp();
+                            player.setResult(0);
                             player.spawn(worldArray[worldNum]);
                             printWorld(worldArray[worldNum]);
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
-                            player.health -= 9;
+                            player.takeHit(0);
                             if (player.getHealth() <= 0){
                                 System.out.println("You died!");
                                 break;
@@ -194,9 +193,9 @@ public class Main {
                         }
 
                     }
-                    else if (player.row == enemy2.row && player.col == enemy2.col){
+                    else if (player.getRow() == enemy2.getRow() && player.getCol() == enemy2.getCol()){
                         if ((int) (Math.random() * 10) < 5){
-                            enemy2.health -= 16 + 8 * blockBuff;
+                            enemy2.heavyHit(blockBuff);
                             System.out.println("Hit!\n");
                             blockBuff = 0;
                         }
@@ -204,16 +203,16 @@ public class Main {
                             System.out.println("Miss!\n");
                             blockBuff = 0;
                         }
-                        if (enemy2.health <= 0){
+                        if (enemy2.getHealth() <= 0){
                             enemy2.setHealth(0);
-                            player.level++;
-                            player.result = 0;
+                            player.levelUp();
+                            player.setResult(0);
                             player.spawn(worldArray[worldNum]);
                             printWorld(worldArray[worldNum]);
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
-                            player.health -= 9;
+                            player.takeHit(0);
                             if (player.getHealth() <= 0){
                                 System.out.println("You died!");
                                 break;
@@ -221,9 +220,9 @@ public class Main {
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + "\nEnemy health:" + enemy2.getHealth() + "\n");
                         }
                     }
-                    else if (player.row == enemy3.row && player.col == enemy3.col){
+                    else if (player.getRow() == enemy3.getRow() && player.getCol() == enemy3.getCol()){
                         if ((int) (Math.random() * 10) < 5){
-                            enemy3.health -= 16 + 8 * blockBuff;
+                            enemy3.heavyHit(blockBuff);
                             System.out.println("Hit!\n");
                             blockBuff = 0;
                         }
@@ -231,16 +230,16 @@ public class Main {
                             System.out.println("Miss!\n");
                             blockBuff = 0;
                         }
-                        if (enemy3.health <= 0){
+                        if (enemy3.getHealth() <= 0){
                             enemy3.setHealth(0);
-                            player.level++;
-                            player.result = 0;
+                            player.levelUp();
+                            player.setResult(0);
                             player.spawn(worldArray[worldNum]);
                             printWorld(worldArray[worldNum]);
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
-                            player.health -= 9;
+                            player.takeHit(0);
                             if (player.getHealth() <= 0){
                                 System.out.println("You died!");
                                 break;
@@ -248,9 +247,9 @@ public class Main {
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + "\nEnemy health:" + enemy3.getHealth() + "\n");
                         }
                     }
-                    else if (player.row == enemyBoss.row && player.col == enemyBoss.col){
+                    else if (player.getRow() == enemyBoss.getRow() && player.getCol() == enemyBoss.getCol()){
                         if ((int) (Math.random() * 10) < 5){
-                            enemyBoss.health -= 16 + 8 * blockBuff;
+                            enemyBoss.heavyHit(blockBuff);
                             System.out.println("Hit!\n");
                             blockBuff = 0;
                         }
@@ -258,18 +257,18 @@ public class Main {
                             System.out.println("Miss!\n");
                             blockBuff = 0;
                         }
-                        if (enemyBoss.health <= 0){
+                        if (enemyBoss.getHealth() <= 0){
                             enemyBoss.setHealth(0);
-                            player.level++;
-                            player.result = 0;
+                            player.levelUp();
+                            player.setResult(0);
                             player.spawn(worldArray[worldNum]);
                             printWorld(worldArray[worldNum]);
-                            System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nBoss slain.\nYou've defeated the dungeon!'\n");
+                            System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nBoss slain.\nYou've defeated the dungeon!\n");
                             System.out.println("Final score: " + (player.getLevel() * 10 + player.getPotions() * 5 + player.getHealth() - (int) inputPenalty));
                             break;
                         }
                         else {
-                            player.health -= 9;
+                            player.takeHit(0);
                             if (player.getHealth() <= 0){
                                 System.out.println("You died!");
                                 break;
@@ -279,21 +278,20 @@ public class Main {
                     }
                 }
                 else if (input.equals("j")){
-                    jabUpgrade = player.getJabUpgrade();
-                    if (player.row == enemy1.row && player.col == enemy1.col){
-                        enemy1.health -= 6 + 3 * blockBuff;
+                    if (player.getRow() == enemy1.getRow() && player.getCol() == enemy1.getCol()){
+                        enemy1.jabHit(blockBuff);
                         System.out.println("Hit.\n");
                         blockBuff = 0;
-                        if (enemy1.health <= 0){
+                        if (enemy1.getHealth() <= 0){
                             enemy1.setHealth(0);
-                            player.level++;
-                            player.result = 0;
+                            player.levelUp();
+                            player.setResult(0);
                             player.spawn(worldArray[worldNum]);
                             printWorld(worldArray[worldNum]);
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
-                            player.health -= 9 - jabUpgrade;
+                            player.takeHit(player.getJabUpgrade());
                             if (player.getHealth() <= 0){
                                 System.out.println("You died!");
                                 break;
@@ -301,20 +299,20 @@ public class Main {
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + "\nEnemy health:" + enemy1.getHealth() + "\n");
                         }
                     }
-                    else if (player.row == enemy2.row && player.col == enemy2.col){
-                        enemy2.health -= 6 + 3 * blockBuff;
+                    else if (player.getRow() == enemy2.getRow() && player.getCol() == enemy2.getCol()){
+                        enemy2.jabHit(blockBuff);
                         System.out.println("Hit.\n");
                         blockBuff = 0;
-                        if (enemy2.health <= 0){
+                        if (enemy2.getHealth() <= 0){
                             enemy2.setHealth(0);
-                            player.level++;
-                            player.result = 0;
+                            player.levelUp();
+                            player.setResult(0);
                             player.spawn(worldArray[worldNum]);
                             printWorld(worldArray[worldNum]);
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
-                            player.health -= 9 - jabUpgrade;
+                            player.takeHit(player.getJabUpgrade());
                             if (player.getHealth() <= 0){
                                 System.out.println("You died!");
                                 break;
@@ -322,20 +320,20 @@ public class Main {
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + "\nEnemy health:" + enemy2.getHealth() + "\n");
                         }
                     }
-                    else if (player.row == enemy3.row && player.col == enemy3.col){
-                        enemy3.health -= 6 + 3 * blockBuff;
+                    else if (player.getRow() == enemy3.getRow() && player.getCol() == enemy3.getCol()){
+                        enemy3.jabHit(blockBuff);
                         System.out.println("Hit.\n");
                         blockBuff = 0;
-                        if (enemy3.health <= 0){
+                        if (enemy3.getHealth() <= 0){
                             enemy3.setHealth(0);
-                            player.level++;
-                            player.result = 0;
+                            player.levelUp();
+                            player.setResult(0);
                             player.spawn(worldArray[worldNum]);
                             printWorld(worldArray[worldNum]);
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
-                            player.health -= 9 - jabUpgrade;
+                            player.takeHit(player.getJabUpgrade());
                             if (player.getHealth() <= 0){
                                 System.out.println("You died!");
                                 break;
@@ -343,23 +341,22 @@ public class Main {
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + "\nEnemy health:" + enemy3.getHealth() + "\n");
                         }
                     }
-                    else if (player.row == enemyBoss.row && player.col == enemyBoss.col){
-                        enemyBoss.health -= 6 + 3 * blockBuff;
+                    else if (player.getRow() == enemyBoss.getRow() && player.getCol() == enemyBoss.getCol()){
+                        enemyBoss.jabHit(blockBuff);
                         System.out.println("Hit.\n");
                         blockBuff = 0;
-                        if (enemyBoss.health <= 0){
+                        if (enemyBoss.getHealth() <= 0){
                             enemyBoss.setHealth(0);
-                            player.level++;
-                            player.result = 0;
+                            player.levelUp();
+                            player.setResult(0);
                             player.spawn(worldArray[worldNum]);
                             printWorld(worldArray[worldNum]);
-                            System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nBoss slain.\nYou've defeated the dungeon!'\n");
+                            System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nBoss slain.\nYou've defeated the dungeon!\n");
                             System.out.println("Final score: " + (player.getLevel() * 10 + player.getPotions() * 5 + player.getHealth() - (int) inputPenalty));
-                            System.out.println(inputPenalty);
                             break;
                         }
                         else {
-                            player.health -= 9 - jabUpgrade;
+                            player.takeHit(player.getJabUpgrade());
                             if (player.getHealth() <= 0){
                                 System.out.println("You died!");
                                 break;
@@ -369,23 +366,23 @@ public class Main {
                     }
                 }
                 else if (input.equals("b")){
-                    player.health -= 3;
+                    player.takeHit(6);
                     if (player.getHealth() <= 0){
                         System.out.println("You died!");
                         break;
                     }
                     blockBuff = 1;
                     System.out.println("You block most incoming damage, your next hit deals 50% more damage.\n");
-                    if (player.row == enemy1.row && player.col == enemy1.col){
+                    if (player.getRow() == enemy1.getRow() && player.getCol() == enemy1.getCol()){
                         System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + "\nEnemy health:" + enemy1.getHealth() + "\n");
                     }
-                    else if (player.row == enemy2.row && player.col == enemy2.col){
+                    else if (player.getRow() == enemy2.getRow() && player.getCol() == enemy2.getCol()){
                         System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + "\nEnemy health:" + enemy2.getHealth() + "\n");
                     }
-                    else if (player.row == enemy3.row && player.col == enemy3.col){
+                    else if (player.getRow() == enemy3.getRow() && player.getCol() == enemy3.getCol()){
                         System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + "\nEnemy health:" + enemy3.getHealth() + "\n");
                     }
-                    else if (player.row == enemyBoss.row && player.col == enemyBoss.col){
+                    else if (player.getRow() == enemyBoss.getRow() && player.getCol() == enemyBoss.getCol()){
                         System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + "\nBoss health:" + enemyBoss.getHealth() + "\n");
                     }
                 }

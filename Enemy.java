@@ -1,9 +1,9 @@
 public class Enemy {
-    int row;
-    int col;
-    String tempBlock;
-    int health;
-    int isBoss;
+    private int row;
+    private int col;
+    private String tempBlock;
+    private int health;
+    private int isBoss;
 
     public Enemy(int row, int col){
         this.row = row;
@@ -30,6 +30,14 @@ public class Enemy {
         else {
             world[row][col] = "*";
         }
+    }
+
+    public void jabHit(int blockBuff){
+        this.health -= 6 + 3 * blockBuff;
+    }
+
+    public void heavyHit(int blockBuff){
+        this.health -= 16 + 8 * blockBuff;
     }
 
     public void updatePos(String[][] world){
