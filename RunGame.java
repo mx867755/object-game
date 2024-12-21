@@ -1,11 +1,13 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class RunGame {
     public static void main(String[] args){
         Scanner in = new Scanner(System.in);
 
-        //3d array for multiple stages
-        String[][][] worldArray = {{{"#","#","#","#","#","#","#","#","#","#"},
+        ArrayList<World> worldArrayList = new ArrayList<>();
+        worldArrayList.add(new World(new String[][] {
+                {"#","#","#","#","#","#","#","#","#","#"},
                 {"#"," "," ","#","T"," "," "," "," ","#"},
                 {"#"," "," ","#","#"," "," ","#"," ","#"},
                 {"#"," "," "," ","#","#"," "," "," ","#"},
@@ -14,51 +16,56 @@ public class Main {
                 {"#","#","#"," ","#"," ","#","#"," ","#"},
                 {"#"," "," "," ",":"," "," "," "," ","#"},
                 {"#","#","#"," ","#","#"," "," "," ","#"},
-                {"#","#","#","#","#","#","E","#","#","#"}},
-
-                {{"#","#","#","#","#","#","#","#","#","#"},
-                        {"#"," "," "," "," "," "," "," "," ","#"},
-                        {"#"," ","#",":","#"," "," "," ","#","#"},
-                        {"#","#","#",":","#","#"," ","#","#","#"},
-                        {"#"," ","#",":","#"," "," ",":","T","#"},
-                        {"#"," "," "," ","#","#"," ","#",":","#"},
-                        {"#","#"," "," ","#"," "," "," "," ","#"},
-                        {"E"," "," "," ",":"," "," "," "," ","#"},
-                        {"#","#","#","#","#","#"," "," ","#","#"},
-                        {"#","#","#","#","#","#","#","#","#","#"}},
-
-                {{"#","#","#","#","#","#","#","#","#","#"},
-                        {"#"," "," "," "," "," ","#"," "," ","#"},
-                        {"#"," ","#","#",":"," "," "," "," ","#"},
-                        {"#"," ","#","#",":","#","#"," ","#","#"},
-                        {"#"," ","#"," ",":","E","#"," ","#","#"},
-                        {"#","U","#"," ","#","#","#"," ","#","#"},
-                        {"#",":","#"," ","#"," "," "," ","#","#"},
-                        {"#",":","#"," ",":"," ",":"," ","T","#"},
-                        {"#"," "," "," ","#"," "," "," ","#","#"},
-                        {"#","#","#","#","#","#","#","#","#","#"}},
-
-                {{"#","#","#","#","#","#","#","#","#","#"},
-                        {"#"," ",":"," "," "," "," "," ","#","#"},
-                        {"#"," ","#"," "," "," "," ",":","#","#"},
-                        {"#","T","#"," ","#"," ","#",":","U","#"},
-                        {"#"," "," "," ","#"," ","#","#"," ","#"},
-                        {"#","#","#",":","#"," "," ","#"," ","#"},
-                        {"#"," "," "," ",":"," "," "," ",":","#"},
-                        {"#"," ",":"," ","#"," ","#"," "," ","#"},
-                        {"#"," "," "," ","#"," "," "," "," ","#"},
-                        {"#","#","E","#","#","#","#","#","#","#"}},
-
-                {{"#","#","#","#","#","#","#","#","#","#"},
-                        {"#"," "," "," ","#","#","#","#","T","#"},
-                        {"#"," "," "," ",":"," "," ","#",":","#"},
-                        {"#"," "," "," ","#"," "," ","#",":","#"},
-                        {"#","#",":","#","#"," "," ","#",":","#"},
-                        {"#","#"," "," "," "," "," "," "," ","#"},
-                        {"#","#"," "," "," "," ","#","#",":","#"},
-                        {"#","#"," "," "," "," ","#"," "," ","#"},
-                        {"#"," "," "," "," "," ",":"," "," ","#"},
-                        {"#","#","#","#","#","#","#","#","#","#"}}};
+                {"#","#","#","#","#","#","E","#","#","#"}
+        }));
+        worldArrayList.add(new World(new String[][] {
+                {"#","#","#","#","#","#","#","#","#","#"},
+                {"#"," "," "," "," "," "," "," "," ","#"},
+                {"#"," ","#",":","#"," "," "," ","#","#"},
+                {"#","#","#",":","#","#"," ","#","#","#"},
+                {"#"," ","#",":","#"," "," ",":","T","#"},
+                {"#"," "," "," ","#","#"," ","#",":","#"},
+                {"#","#"," "," ","#"," "," "," "," ","#"},
+                {"E"," "," "," ",":"," "," "," "," ","#"},
+                {"#","#","#","#","#","#"," "," ","#","#"},
+                {"#","#","#","#","#","#","#","#","#","#"}
+        }));
+        worldArrayList.add(new World(new String[][] {
+                {"#","#","#","#","#","#","#","#","#","#"},
+                {"#"," "," "," "," "," ","#"," "," ","#"},
+                {"#"," ","#","#",":"," "," "," "," ","#"},
+                {"#"," ","#","#",":","#","#"," ","#","#"},
+                {"#"," ","#"," ",":","E","#"," ","#","#"},
+                {"#","U","#"," ","#","#","#"," ","#","#"},
+                {"#",":","#"," ","#"," "," "," ","#","#"},
+                {"#",":","#"," ",":"," ",":"," ","T","#"},
+                {"#"," "," "," ","#"," "," "," ","#","#"},
+                {"#","#","#","#","#","#","#","#","#","#"}
+        }));
+        worldArrayList.add(new World(new String[][] {
+                {"#","#","#","#","#","#","#","#","#","#"},
+                {"#"," ",":"," "," "," "," "," ","#","#"},
+                {"#"," ","#"," "," "," "," ",":","#","#"},
+                {"#","T","#"," ","#"," ","#",":","U","#"},
+                {"#"," "," "," ","#"," ","#","#"," ","#"},
+                {"#","#","#",":","#"," "," ","#"," ","#"},
+                {"#"," "," "," ",":"," "," "," ",":","#"},
+                {"#"," ",":"," ","#"," ","#"," "," ","#"},
+                {"#"," "," "," ","#"," "," "," "," ","#"},
+                {"#","#","E","#","#","#","#","#","#","#"}
+        }));
+        worldArrayList.add(new World(new String[][]{
+                {"#","#","#","#","#","#","#","#","#","#"},
+                {"#"," "," "," ","#","#","#","#","T","#"},
+                {"#"," "," "," ",":"," "," ","#",":","#"},
+                {"#"," "," "," ","#"," "," ","#",":","#"},
+                {"#","#",":","#","#"," "," ","#",":","#"},
+                {"#","#"," "," "," "," "," "," "," ","#"},
+                {"#","#"," "," "," "," ","#","#",":","#"},
+                {"#","#"," "," "," "," ","#"," "," ","#"},
+                {"#"," "," "," "," "," ",":"," "," ","#"},
+                {"#","#","#","#","#","#","#","#","#","#"}
+        }));
         //wld0, wld1, wld2, wld3, wld4
         int[][][] xy = {{{1,1},{1,1},{1,8},{3,3},{8,8}}, //player xy
                 {{8,7},{6,2},{6,7},{5,8},{3,6}}, //enemy1 xy
@@ -68,13 +75,13 @@ public class Main {
         int worldNum = 0;
 
         Player player = new Player(xy[0][worldNum][0], xy[0][worldNum][1]);
-        player.spawn(worldArray[worldNum]);
+        player.spawn(worldArrayList.get(worldNum));
 
         Enemy enemy1 = new Enemy(xy[1][worldNum][0], xy[1][worldNum][1]);
-        enemy1.spawn(worldArray[worldNum]);
+        enemy1.spawn(worldArrayList.get(worldNum));
 
         Enemy enemy2 = new Enemy(xy[2][worldNum][0], xy[2][worldNum][1]);
-        enemy2.spawn(worldArray[worldNum]);
+        enemy2.spawn(worldArrayList.get(worldNum));
 
         Enemy enemy3 = new Enemy(xy[2][worldNum][0], xy[2][worldNum][1]);
         enemy3.setHealth(0);
@@ -84,8 +91,9 @@ public class Main {
 
         System.out.println("\nType 'w', 'a', 's', 'd' to move. Type 'heal' to use a potion. Type 'quit' to leave the game at any time.\n");
         //player.setHealth(67);
-        //player.setLevel(3);
-        printWorld(worldArray[worldNum]);
+        //player.setLevel(6);
+        //player.setPotions(2);
+        printWorld(worldArrayList.get(worldNum));
         System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\n");
         int blockBuff = 0;
         int healFight = 1;
@@ -101,45 +109,45 @@ public class Main {
                 if (input.equals("heal")){
                     player.heal();
                 }
-                else if (player.updatePos(input, worldArray[worldNum]) > 0){
+                else if (player.updatePos(input, worldArrayList.get(worldNum)) > 0){
                     if (player.getHealth() <= 0){
                         System.out.println("You died!");
                         break;
                     }
                     else if (player.getResult() != 2){
-                        enemy1.updatePos(worldArray[worldNum]);
-                        enemy2.updatePos(worldArray[worldNum]);
-                        enemy3.updatePos(worldArray[worldNum]);
-                        enemyBoss.updatePos(worldArray[worldNum]);
-                        printWorld(worldArray[worldNum]);
+                        enemy1.updatePos(worldArrayList.get(worldNum));
+                        enemy2.updatePos(worldArrayList.get(worldNum));
+                        enemy3.updatePos(worldArrayList.get(worldNum));
+                        enemyBoss.updatePos(worldArrayList.get(worldNum));
+                        printWorld(worldArrayList.get(worldNum));
                         System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potions:" + player.getPotions() + "\n");
                         if (player.getResult() == 3){
                             System.out.println("Next stage! Enemies grow stronger!\n");
                             worldNum++;
                             //spawn player in next world
                             player.setRow(xy[0][worldNum][0]); player.setCol(xy[0][worldNum][1]);
-                            player.spawn(worldArray[worldNum]);
+                            player.spawn(worldArrayList.get(worldNum));
                             //respawn enemy1
                             enemy1.setRow(xy[1][worldNum][0]); enemy1.setCol(xy[1][worldNum][1]);
                             enemy1.setHealth(50 + 5 * worldNum);
-                            enemy1.spawn(worldArray[worldNum]);
+                            enemy1.spawn(worldArrayList.get(worldNum));
                             //respawn enemy2
                             enemy2.setRow(xy[2][worldNum][0]); enemy2.setCol(xy[2][worldNum][1]);
                             enemy2.setHealth(50 + 5 * worldNum);
-                            enemy2.spawn(worldArray[worldNum]);
+                            enemy2.spawn(worldArrayList.get(worldNum));
                             //spawn and respawn enemy3
                             enemy3.setRow(xy[3][worldNum][0]); enemy3.setCol(xy[3][worldNum][1]);
                             enemy3.setHealth(50 + 5 * worldNum);
-                            enemy3.spawn(worldArray[worldNum]);
+                            enemy3.spawn(worldArrayList.get(worldNum));
                             //spawn final boss
                             if (worldNum == 4){
                                 enemyBoss.setRow(2); enemyBoss.setCol(2);
                                 enemyBoss.setHealth(125);
                                 enemyBoss.setIsBoss(1);
-                                enemyBoss.spawn(worldArray[worldNum]);
+                                enemyBoss.spawn(worldArrayList.get(worldNum));
                             }
                             //print next world
-                            printWorld(worldArray[worldNum]);
+                            printWorld(worldArrayList.get(worldNum));
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potions:" + player.getPotions() + "\n");
                         }
                         else if (player.getResult() == 4){
@@ -150,7 +158,7 @@ public class Main {
                         }
                     }
                     else{
-                        printWorld(worldArray[worldNum]);
+                        printWorld(worldArrayList.get(worldNum));
                         if (player.getRow() == enemyBoss.getRow() && player.getCol() == enemyBoss.getCol()){
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nBoss health:" + enemyBoss.getHealth() + "\nFIGHT!\nType 'j' (jab), 'h' (heavy), 'b' (block), or 'heal' (only at start of fight).\n");
                         }
@@ -179,8 +187,8 @@ public class Main {
                             enemy1.setHealth(0);
                             player.levelUp();
                             player.setResult(0);
-                            player.spawn(worldArray[worldNum]);
-                            printWorld(worldArray[worldNum]);
+                            player.spawn(worldArrayList.get(worldNum));
+                            printWorld(worldArrayList.get(worldNum));
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
@@ -207,8 +215,8 @@ public class Main {
                             enemy2.setHealth(0);
                             player.levelUp();
                             player.setResult(0);
-                            player.spawn(worldArray[worldNum]);
-                            printWorld(worldArray[worldNum]);
+                            player.spawn(worldArrayList.get(worldNum));
+                            printWorld(worldArrayList.get(worldNum));
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
@@ -234,8 +242,8 @@ public class Main {
                             enemy3.setHealth(0);
                             player.levelUp();
                             player.setResult(0);
-                            player.spawn(worldArray[worldNum]);
-                            printWorld(worldArray[worldNum]);
+                            player.spawn(worldArrayList.get(worldNum));
+                            printWorld(worldArrayList.get(worldNum));
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
@@ -261,8 +269,8 @@ public class Main {
                             enemyBoss.setHealth(0);
                             player.levelUp();
                             player.setResult(0);
-                            player.spawn(worldArray[worldNum]);
-                            printWorld(worldArray[worldNum]);
+                            player.spawn(worldArrayList.get(worldNum));
+                            printWorld(worldArrayList.get(worldNum));
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nBoss slain.\nYou've defeated the dungeon!\n");
                             System.out.println("Final score: " + (player.getLevel() * 10 + player.getPotions() * 5 + player.getHealth() - (int) inputPenalty));
                             break;
@@ -286,8 +294,8 @@ public class Main {
                             enemy1.setHealth(0);
                             player.levelUp();
                             player.setResult(0);
-                            player.spawn(worldArray[worldNum]);
-                            printWorld(worldArray[worldNum]);
+                            player.spawn(worldArrayList.get(worldNum));
+                            printWorld(worldArrayList.get(worldNum));
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
@@ -307,8 +315,8 @@ public class Main {
                             enemy2.setHealth(0);
                             player.levelUp();
                             player.setResult(0);
-                            player.spawn(worldArray[worldNum]);
-                            printWorld(worldArray[worldNum]);
+                            player.spawn(worldArrayList.get(worldNum));
+                            printWorld(worldArrayList.get(worldNum));
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
@@ -328,8 +336,8 @@ public class Main {
                             enemy3.setHealth(0);
                             player.levelUp();
                             player.setResult(0);
-                            player.spawn(worldArray[worldNum]);
-                            printWorld(worldArray[worldNum]);
+                            player.spawn(worldArrayList.get(worldNum));
+                            printWorld(worldArrayList.get(worldNum));
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nEnemy slain.\nLevel up! Max health increased!\n");
                         }
                         else {
@@ -349,8 +357,8 @@ public class Main {
                             enemyBoss.setHealth(0);
                             player.levelUp();
                             player.setResult(0);
-                            player.spawn(worldArray[worldNum]);
-                            printWorld(worldArray[worldNum]);
+                            player.spawn(worldArrayList.get(worldNum));
+                            printWorld(worldArrayList.get(worldNum));
                             System.out.println("Health:" + player.getHealth() + " / Level:" + player.getLevel() + " / Potion(s):" + player.getPotions() + "\nBoss slain.\nYou've defeated the dungeon!\n");
                             System.out.println("Final score: " + (player.getLevel() * 10 + player.getPotions() * 5 + player.getHealth() - (int) inputPenalty));
                             break;
@@ -366,7 +374,8 @@ public class Main {
                     }
                 }
                 else if (input.equals("b")){
-                    player.takeHit(6);
+                    player.takeHit(6
+                    );
                     if (player.getHealth() <= 0){
                         System.out.println("You died!");
                         break;
@@ -391,8 +400,8 @@ public class Main {
         }
     }
 
-    public static void printWorld(String[][] worldArray){
-        for (String[] cool : worldArray){
+    public static void printWorld(World world){
+        for (String[] cool : world.getBoardArr()){
             for (String very : cool){
                 System.out.print(very + " ");
             }
