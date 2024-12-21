@@ -6,6 +6,7 @@ public class Player {
     int level;
     int potions;
     int result;
+    int jabUpgrade;
 
     public Player(int row, int col){
         this.row = row;
@@ -15,8 +16,11 @@ public class Player {
         this.level = 1;
         this.potions = 1;
         this.result = 0;
+        this.jabUpgrade = 0;
     }
 
+    public void setRow(int row){this.row = row;}
+    public void setCol(int col){this.col = col;}
     public void setHealth(int health){this.health = health;}
     public void setLevel(int level){this.level = level;}
     public void setPotions(int potions){this.potions = potions;}
@@ -27,9 +31,11 @@ public class Player {
     public int getLevel(){return this.level;}
     public int getPotions(){return this.potions;}
     public int getResult(){return this.result;}
+    public int getJabUpgrade(){return this.jabUpgrade;}
 
     public void spawn(String[][] world){
         world[row][col] = "+";
+        this.tempBlock = " ";
     }
 
     public int updatePos(String input, String[][] world) {
@@ -112,6 +118,11 @@ public class Player {
             tempBlock = " ";
             result = 2;
         }
+        else if (tempBlock.equals("@")){
+            world[row][col] = "x";
+            tempBlock = " ";
+            result = 2;
+        }
         else if (tempBlock.equals("E")){
             world[row][col] = "x";
             result = 3;
@@ -121,6 +132,12 @@ public class Player {
             potions++;
             tempBlock = " ";
             result = 4;
+        }
+        else if (tempBlock.equals("U")){
+            world[row][col] = "x";
+            jabUpgrade++;
+            tempBlock = " ";
+            result = 5;
         }
         else if (tempBlock.equals(":")){
             world[row][col] = "x";
@@ -134,10 +151,10 @@ public class Player {
             double temp = 100 + (level-1) * 10;
             this.health = (int) temp;
             this.potions--;
-            System.out.println("Your health is now " + health);
+            System.out.println("Health fully restored (Health:" + health + ").\n");
         }
         else {
-            System.out.println("You don't have any potions.");
+            System.out.println("You don't have any potions.\n");
         }
     }
 }
